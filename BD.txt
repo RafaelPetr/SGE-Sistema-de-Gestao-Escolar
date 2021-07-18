@@ -1,0 +1,128 @@
+CREATE TABLE Professores (
+	cpf VARCHAR(11) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+	telefone VARCHAR(9),
+    email VARCHAR(50) NOT NULL,
+    
+    PRIMARY KEY (cpf)
+);
+
+CREATE TABLE Escolas (
+	id INT NOT NULL,
+    nome VARCHAR(100) NOT NULL,
+    senha VARCHAR(16) NOT NULL,
+    PRIMARY KEY (id)
+);
+
+CREATE TABLE Escolas_Professores (
+    id_escola INT NOT NULL,
+	cpf_professor VARCHAR(11) NOT NULL,
+    
+    PRIMARY KEY(cpf_professor, id_escola),
+    FOREIGN KEY(id_escola) REFERENCES escolas(id),
+    FOREIGN KEY(cpf_professor) REFERENCES Professores(cpf)
+);
+
+CREATE TABLE Cursos (
+    id INT NOT NULL AUTO_INCREMENT,
+    nome VARCHAR(50) NOT NULL,
+    anos INT NOT NULL,
+    id_escola INT NOT NULL,
+    cpf_coordenador varchar(11) NOT NULL,
+    
+    PRIMARY KEY(id),
+    FOREIGN KEY(id_escola) REFERENCES escolas(id),
+    FOREIGN KEY(cpf_coordenador) REFERENCES professores(cpf)
+);
+
+CREATE TABLE Turmas (
+    id INT NOT NULL,
+    ano INT NOT NULL,
+    id_curso INT NOT NULL,
+    
+    PRIMARY KEY(id),
+    FOREIGN KEY(id_curso) REFERENCES cursos(id)
+);
+
+CREATE TABLE Alunos (
+	matricula VARCHAR(8) NOT NULL,
+    cpf VARCHAR(11) NOT NULL,
+    nome VARCHAR(40) NOT NULL,
+    telefone VARCHAR(9),
+    email VARCHAR(50) NOT NULL,
+    id_turma INT NOT NULL,    
+
+    PRIMARY KEY(matricula),
+    UNIQUE KEY(cpf)
+);
+
+CREATE TABLE Disciplinas (
+    id INT AUTO_INCREMENT NOT NULL,
+    nome VARCHAR(30) NOT NULL,
+    carga_horaria INT NOT NULL,
+    id_escola INT NOT NULL,
+    
+    PRIMARY KEY (id),
+    FOREIGN KEY (id_escola) REFERENCES escolas(id)
+);
+
+CREATE TABLE Cursos_Disciplinas (
+	id_curso INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    
+    PRIMARY KEY(id_curso, id_disciplina),
+    FOREIGN KEY(id_curso) REFERENCES cursos(id),
+    FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
+);
+
+CREATE TABLE Professores_Disciplinas (
+	cpf_professor VARCHAR(11) NOT NULL,
+    id_disciplina INT NOT NULL,
+    
+    PRIMARY KEY(cpf_professor, id_disciplina),
+    FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
+    FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
+);
+
+CREATE TABLE Aulas (
+    cpf_professor VARCHAR(11) NOT NULL,
+    matricula_aluno VARCHAR(8) NOT NULL,
+    horario DATETIME NOT NULL,
+    disciplina VARCHAR(30) NOT NULL,
+    
+    PRIMARY KEY(cpf_professor, matricula_aluno),
+    FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
+    FOREIGN KEY(matricula_aluno) REFERENCES alunos(matricula)
+);
+
+CREATE TABLE Atividades (
+    id INT AUTO_INCREMENT NOT NULL,
+    id_turma INT NOT NULL,
+    titulo VARCHAR (100),
+    descricao VARCHAR (400),
+    
+    PRIMARY KEY(id),
+    FOREIGN KEY (id_turma) REFERENCES turmas(id)
+)
+
+CREATE TABLE Notas (
+    matricula_aluno VARCHAR(8) NOT NULL,
+    id_disciplina INT NOT NULL,
+    valor1 INT DEFAULT 0,
+    valor2 INT DEFAULT 0,
+    valor3 INT DEFAULT 0,
+    media INT DEFAULT 0,
+    
+    PRIMARY KEY (matricula_aluno, id_disciplina),
+    FOREIGN KEY (matricula_aluno) REFERENCES alunos(matricula),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
+);
+
+CREATE TABLE Cursos_Disciplinas (
+    id_curso INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    
+    PRIMARY KEY (id_curso, id_disciplina),
+    FOREIGN KEY (id_curso) REFERENCES cursos(id),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
+);
