@@ -28,11 +28,9 @@ CREATE TABLE Cursos (
     nome VARCHAR(50) NOT NULL,
     anos INT NOT NULL,
     id_escola INT NOT NULL,
-    cpf_coordenador varchar(11) NOT NULL,
     
     PRIMARY KEY(id),
-    FOREIGN KEY(id_escola) REFERENCES escolas(id),
-    FOREIGN KEY(cpf_coordenador) REFERENCES professores(cpf)
+    FOREIGN KEY(id_escola) REFERENCES escolas(id)
 );
 
 CREATE TABLE Turmas (
@@ -53,6 +51,7 @@ CREATE TABLE Alunos (
     id_turma INT NOT NULL,    
 
     PRIMARY KEY(matricula),
+    FOREIGN KEY(id_turma) REFERENCES turmas(id),
     UNIQUE KEY(cpf)
 );
 
@@ -84,6 +83,15 @@ CREATE TABLE Professores_Disciplinas (
     FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
 );
 
+CREATE TABLE Turmas_Disciplinas (
+    id_turma INT NOT NULL,
+    id_disciplina INT NOT NULL,
+    
+    PRIMARY KEY(id_turma, id_disciplina),
+    FOREIGN KEY(id_turma) REFERENCES turmas(id),
+    FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
+);
+
 CREATE TABLE Aulas (
     cpf_professor VARCHAR(11) NOT NULL,
     matricula_aluno VARCHAR(8) NOT NULL,
@@ -103,7 +111,7 @@ CREATE TABLE Atividades (
     
     PRIMARY KEY(id),
     FOREIGN KEY (id_turma) REFERENCES turmas(id)
-)
+);
 
 CREATE TABLE Notas (
     matricula_aluno VARCHAR(8) NOT NULL,
@@ -115,14 +123,5 @@ CREATE TABLE Notas (
     
     PRIMARY KEY (matricula_aluno, id_disciplina),
     FOREIGN KEY (matricula_aluno) REFERENCES alunos(matricula),
-    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
-);
-
-CREATE TABLE Cursos_Disciplinas (
-    id_curso INT NOT NULL,
-    id_disciplina INT NOT NULL,
-    
-    PRIMARY KEY (id_curso, id_disciplina),
-    FOREIGN KEY (id_curso) REFERENCES cursos(id),
     FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
 );
