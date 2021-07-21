@@ -4,7 +4,8 @@ var connection = mysql.createConnection({
     "local":"localhost",
     "user": "root",
     "database": "sge",
-    "password": "123456"
+    "password": "123456",
+    "multipleStatements": true
 })
 
 connection.connect((err, result) => {

@@ -8,7 +8,7 @@ CREATE TABLE Professores (
 );
 
 CREATE TABLE Escolas (
-	id INT NOT NULL,
+	id INT NOT NULL AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     senha VARCHAR(16) NOT NULL,
     PRIMARY KEY (id)
@@ -34,7 +34,7 @@ CREATE TABLE Cursos (
 );
 
 CREATE TABLE Turmas (
-    id INT NOT NULL,
+    id INT NOT NULL AUTO_INCREMENT,
     ano INT NOT NULL,
     id_curso INT NOT NULL,
     
@@ -125,3 +125,5 @@ CREATE TABLE Notas (
     FOREIGN KEY (matricula_aluno) REFERENCES alunos(matricula),
     FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
 );
+
+DELIMITER // CREATE PROCEDURE InserirTurmas (limite INT) BEGIN DECLARE contador INT DEFAULT 0; loop_insert: LOOP SET contador = contador + 1; INSERT INTO turmas (ano, id_curso) SELECT contador, MAX(id) FROM cursos; IF contador >= limite THEN LEAVE loop_insert; END IF; END LOOP loop_insert; END// DELIMITER ; 
