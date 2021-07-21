@@ -43,16 +43,15 @@ CREATE TABLE Turmas (
 );
 
 CREATE TABLE Alunos (
-	matricula VARCHAR(8) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
+	matricula VARCHAR(8) NOT NULL,
     nome VARCHAR(40) NOT NULL,
     telefone VARCHAR(9),
     email VARCHAR(50) NOT NULL,
     id_turma INT NOT NULL,    
 
-    PRIMARY KEY(matricula),
-    FOREIGN KEY(id_turma) REFERENCES turmas(id),
-    UNIQUE KEY(cpf)
+    PRIMARY KEY(cpf,matricula),
+    FOREIGN KEY(id_turma) REFERENCES turmas(id)
 );
 
 CREATE TABLE Disciplinas (
