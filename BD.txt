@@ -3,6 +3,7 @@ CREATE TABLE Professores (
     nome VARCHAR(50) NOT NULL,
 	telefone VARCHAR(9),
     email VARCHAR(50) NOT NULL,
+    senha VARCHAR(16) NOT NULL,
     
     PRIMARY KEY (cpf)
 );
@@ -44,13 +45,21 @@ CREATE TABLE Turmas (
 
 CREATE TABLE Alunos (
     cpf VARCHAR(11) NOT NULL,
-	matricula VARCHAR(8) NOT NULL,
     nome VARCHAR(40) NOT NULL,
     telefone VARCHAR(9),
     email VARCHAR(50) NOT NULL,
+    senha VARCHAR(16) NOT NULL,
+
+    PRIMARY KEY(cpf)
+);
+
+CREATE TABLE Alunos_Escolas (
+	matricula VARCHAR(8) NOT NULL,
+    cpf_aluno VARCHAR(11) NOT NULL,
     id_turma INT NOT NULL,    
 
-    PRIMARY KEY(cpf,matricula),
+    PRIMARY KEY(matricula),
+    FOREIGN KEY(cpf_aluno) REFERENCES alunos(cpf),
     FOREIGN KEY(id_turma) REFERENCES turmas(id)
 );
 
@@ -99,7 +108,7 @@ CREATE TABLE Aulas (
     
     PRIMARY KEY(cpf_professor, matricula_aluno),
     FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
-    FOREIGN KEY(matricula_aluno) REFERENCES alunos(matricula)
+    FOREIGN KEY(matricula_aluno) REFERENCES Alunos_Escolas(matricula)
 );
 
 CREATE TABLE Atividades (
@@ -121,7 +130,7 @@ CREATE TABLE Notas (
     media INT DEFAULT 0,
     
     PRIMARY KEY (matricula_aluno, id_disciplina),
-    FOREIGN KEY (matricula_aluno) REFERENCES alunos(matricula),
+    FOREIGN KEY (matricula_aluno) REFERENCES Alunos_Escolas(matricula),
     FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
 );
 
