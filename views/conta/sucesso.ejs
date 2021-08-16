@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/client/conta/css/conta.css">
-        <title>Criar Escola</title>
+        <title>Conta criada com sucesso!</title>
     </head>
     <body>
         <div id="container">
@@ -24,23 +24,13 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Criar Escola</h1>
+                    <h1>Conta criada com sucesso!</h1>
                 </section>
-                <form method="POST" action="./">
-                    <div>
-                        <label for="cnpj">CNPJ</label><br>
-                        <input type="text" id="cnpj" name="cnpj"><br>
-                    </div>
-                    <div>
-                        <label for="nome">Nome</label><br>
-                        <input type="text" id="nome" name="nome"><br>
-                    </div>
-                    <div>
-                        <label for="senha">Senha</label><br>
-                        <input type="password" id="senha" name="senha"><br>
-                    </div>
-                    <input type="submit" value="Criar">
-                </form>
+                <section id="contaCriada">
+                    <p>Seu usuário é: <%= conta.user %></p>
+                    <p>Sua senha é: <%= conta.senha %></p>
+                    <a href="../../../login/">Entrar</a>
+                </section>
             </main>
             <footer>
                 <p>Página criada por Rafael Petry da Silva, 2021.</p>

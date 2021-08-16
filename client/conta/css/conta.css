@@ -78,24 +78,44 @@ nav ul li a:visited {
 }
 
 main {
+    text-align: center;
     max-width: 600px;
 	margin:0 auto;
     margin-top:10%;
-    background-color: blueviolet;
+    background-color: #138bc7;
 }
 
 main #formTitulo {
-    text-align: center;
     padding: 20px 0;
     color: #00DEB9;
     background-color: #085DD4;
 }
 
+main #contaCriada {
+    font-size: 24px;
+    color: #00DEB9;
+    padding: 50px 0;
+}
+
+main select {
+    font-size: 24px;
+    color: #00DEB9;
+}
+
+main a {
+	padding: 12px 10px;
+    margin-bottom: 16px;
+	margin-right: 10px;
+	background-color: #085DD4;
+}
+
+main p {
+    margin-bottom: 20px;
+}
+
 main form {
-    text-align: center;
     padding: 50px 0;
     color: #00DEB9;
-    background-color: #138bc7;
 }
 
 main form div {
@@ -113,6 +133,13 @@ main form div input {
 main form input {
     color: #085DD4;
     font-size: 24px;
+}
+
+main a:link, 
+main a:visited {
+    color: #00DEB9;
+    text-decoration: none;
+    font-weight: bold;
 }
 
 footer {

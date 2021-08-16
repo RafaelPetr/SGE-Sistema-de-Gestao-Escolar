@@ -1,15 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Gestão Escolar</title>
-</head>
-<body>
-    Usuário:<input id="usuario" type="text">
-    Senha:<input id="senha" type="password">
-    <button onclick="FazerLogin(usuario,senha)">Entrar</button>
-    <script src = "./client/login/js/login.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="/client/conta/css/conta.css">
+        <title>Login</title>
+    </head>
+    <body>
+        <div id="container">
+            <header>
+                <a id="titulo" href="/">SGE: Sistema de Gestão Escolar</a>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/contato/">Contato</a>
+                        </li>
+                        <li>
+                            <a href="/conta/login/">Login</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section id="formTitulo">
+                    <h1>Entrar na Conta</h1>
+                </section>
+                <form method="POST" action="./">
+                    <div>
+                        <label for="tipo">Tipo de Conta:</label>
+                        <select id="tipo" name="tipo">
+                            <option name="escola" value="escola">Escola</option>
+                            <option name="professor" value="professor">Professor</option>
+                            <option name="aluno" value="aluno">Aluno</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="usuario">Usuário</label><br>
+                        <input type="text" id="usuario" name="usuario"><br>
+                    </div>
+                    <div>
+                        <label for="senha">Senha</label><br>
+                        <input type="password" id="senha" name="senha"><br>
+                    </div>
+                    <input type="submit" value="Entrar">
+                </form>
+            </main>
+            <footer>
+                <p>Página criada por Rafael Petry da Silva, 2021.</p>
+            </footer>
+        </div>
+    </body>
 </html>

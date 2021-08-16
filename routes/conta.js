@@ -7,8 +7,34 @@ router.get('/login', (req, res, next) => {
     res.sendFile(process.cwd() + '/views/conta/login.html');
 });
 
-router.get('/sucesso', (req, res, next) => {
-    res.sendFile(process.cwd() + '/views/conta/sucesso.html');
+router.post('/login', (req, res, next) => {
+    var sql = "";
+
+    if (req.body.tipo == "escola") {
+        sql = "SELECT cnpj FROM escolas WHERE cnpj = ? AND senha = ?";
+    }
+
+    else if (req.body.tipo == "professor") {
+        sql = "SELECT cpf FROM professores WHERE cpf = ? AND senha = ?";
+    }
+
+    else if (req.body.tipo == "aluno") {
+        sql = "SELECT cpf FROM alunos WHERE cpf = ? AND senha = ?";
+    }
+
+    db.query(sql, [req.body.usuario, req.body.senha],(err, result) => {
+        if (err) throw err;
+        if (result.length > 0) {
+            res.redirect("../../" + req.body.tipo + "/" + req.body.usuario + "/");
+        }
+        else {
+            res.redirect("./notfound/");
+        }
+    })
+});
+
+router.get('/login/notfound/', (req, res, next) => {
+    res.sendFile(process.cwd() + '/views/conta/notfound.html');
 });
 
 router.get('/escola', (req, res, next) => {
@@ -16,10 +42,10 @@ router.get('/escola', (req, res, next) => {
 });
 
 router.post('/escola', (req, res, next) => {
-    var sql = "INSERT INTO escolas (nome, senha) VALUES (?, ?);";
-    db.query(sql, [req.body.nome, req.body.senha], (err,result) => {
+    var sql = "INSERT INTO escolas (cnpj, nome, senha) VALUES (?, ?, ?);";
+    db.query(sql, [req.body.cnpj, req.body.nome, req.body.senha], (err,result) => {
         if (err) throw err;
-        res.redirect('./');
+        res.redirect('../sucesso/' + req.body.cnpj + "/" + req.body.senha + "/");
     })
 });
 
@@ -31,7 +57,7 @@ router.post('/professor', (req, res, next) => {
     var sql = "INSERT INTO professores (cpf, nome, telefone, email, senha) VALUES (?, ?, ?, ?, ?);";
     db.query(sql, [req.body.cpf, req.body.nome, req.body.telefone, req.body.email, req.body.senha], (err,result) => {
         if (err) throw err;
-        res.redirect('./');
+        res.redirect('../sucesso/' + req.body.cpf + "/" + req.body.senha + "/");
     })
 });
 
@@ -43,8 +69,16 @@ router.post('/aluno', (req, res, next) => {
     var sql = "INSERT INTO alunos (cpf, nome, telefone, email, senha) VALUES (?, ?, ?, ?, ?);";
     db.query(sql, [req.body.cpf, req.body.nome, req.body.telefone, req.body.email, req.body.senha], (err,result) => {
         if (err) throw err;
-        res.redirect('./');
+        res.redirect('../sucesso/' + req.body.cpf + "/" + req.body.senha + "/");
     })
+});
+
+router.get('/sucesso/:user/:senha/', (req, res, next) => {
+    conta = {
+        user: req.params.user,
+        senha: req.params.senha
+    }
+    res.render(process.cwd() + '/views/conta/sucesso.ejs', {conta});
 });
 
 module.exports = router;
