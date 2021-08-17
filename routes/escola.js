@@ -3,8 +3,15 @@ const router = express.Router();
 
 const db = require("../mysqlconnection");
 
-router.get('/:cpnj_escola/', (req, res, next) => {
-    res.sendFile(process.cwd() + '/views/escola/home.html');
+router.get('/:cnpj_escola', (req, res, next) => {
+    let cnpj_escola = req.params.cnpj_escola;
+    console.log(cnpj_escola);
+    var sql = "SELECT * FROM escolas WHERE cnpj = ?;";
+
+    db.query(sql, cnpj_escola,(err, result) => {
+        if (err) throw err;
+        res.render(process.cwd() + '/views/escola/home.ejs', {banco: result[0]});
+    })
 });
 
 router.get('/:cnpj_escola/cursos', (req, res, next) => {

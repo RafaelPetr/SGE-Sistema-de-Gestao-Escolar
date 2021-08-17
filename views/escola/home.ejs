@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="../../client/usuario/css/usuario.css">
+    <title>Escola</title>
+</head>
+    <body>
+        <header>
+        <a id="titulo" href="/">SGE: Sistema de Gestão Escolar</a>
+        <nav>
+            <ul>
+                <li>
+                    <a href="/contato/">Contato</a>
+                </li>
+                <li>
+                    <a href="/conta/login/">Sair</a>
+                </li>
+            </ul>
+        </nav>
+        </header>
+        <main>
+            <div id="container">
+                <h1><%= banco.nome %></h1>
+                <section class="linha">
+                    <ul>
+                    <li>
+                        <div>
+                            <a href="./cursos/"><img src="../../client/usuario/img/cursos_icone.jpg" alt="Icone de Curso - Retirado de https://www.piqsels.com/en/public-domain-photo-zbpnz"></a>
+                            <p>Acesse e modifique a lista de cursos de sua instituição.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="./disciplinas/"><img src="../../client/usuario/img/disciplinas_icone.jpg" alt="Icone de Disciplina - Retirado de https://www.piqsels.com/en/public-domain-photo-zbprr"></a>
+                            <p>Acesse e modifique a lista de disciplinas de sua instituição.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a href="./professores/"><img src="../../client/usuario/img/professor_icone.jpg" alt="Icone de Professor - Retirado de https://www.piqsels.com/en/public-domain-photo-zbdxx"></a>
+                            <p>Acesse e modifique a lista de professores de sua instituição.</p>
+                        </div>
+                    </li>
+                    </ul>
+                </section>
+                <section class="linha">
+                    <ul>
+                    <li>
+                        <div>
+                            <a href="./alunos/"><img src="../../client/usuario/img/aluno_icone.jpg" alt="Icone de Aluno - Retirado de https://www.piqsels.com/en/public-domain-photo-zbgbj"></a>
+                            <p>Acesse e modifique a lista de alunos de sua instituição.</p>
+                        </div>
+                    </li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+        <footer>
+            <p>Página criada por Rafael Petry da Silva, 2021.</p>
+        </footer>
+    </body>
+</html>
