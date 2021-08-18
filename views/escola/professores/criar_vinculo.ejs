@@ -24,16 +24,32 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Cadastrar Disciplina</h1>
+                    <h1>Vincule id_disciplina em id_disciplina</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
-                        <label for="nome">Nome</label><br>
-                        <input type="text" id="nome" name="nome"><br>
+                        <label for="cpf">CPF do Professor</label><br>
+                        <select id="cpf" name="cpf">
+                            <% var i = 0 %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (i != banco.cpf) { %>
+                                    <option name="<%= banco.cpf %>" value="<%= banco.cpf %>"><%= banco.cpf %></option>
+                                <% } %>    
+                                <% i = banco.cpf %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div>
-                        <label for="carga">Carga Horária</label><br>
-                        <input type="number" id="carga" name="carga"><br>
+                        <label for="disciplina">ID da Disciplina</label><br>
+                        <select id="disciplina" name="disciplina">
+                            <% disciplinas = [] %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (!disciplinas.includes(banco.id)) { %>
+                                    <% disciplinas.push(banco.id) %>
+                                    <option name="<%= banco.id %>" value="<%= banco.id %>"><%= banco.id %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>

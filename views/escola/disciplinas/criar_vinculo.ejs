@@ -24,16 +24,32 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Cadastrar Disciplina</h1>
+                    <h1>Vincule Disciplina em Turma</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
-                        <label for="nome">Nome</label><br>
-                        <input type="text" id="nome" name="nome"><br>
+                        <label for="id_turma">ID da Turma</label><br>
+                        <select id="id_turma" name="id_turma">
+                            <% turmas = [] %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (!turmas.includes(banco.turma)) { %>
+                                    <% turmas.push(banco.turma) %>
+                                    <option name="<%= banco.turma %>" value="<%= banco.turma %>"><%= banco.turma %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div>
-                        <label for="carga">Carga Horária</label><br>
-                        <input type="number" id="carga" name="carga"><br>
+                        <label for="id_disciplina">ID da Disciplina</label><br>
+                        <select id="id_disciplina" name="id_disciplina">
+                            <% var i = 0 %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (i != banco.disciplina) { %>
+                                    <option name="<%= banco.disciplina %>" value="<%= banco.disciplina %>"><%= banco.disciplina %></option>
+                                <% } %>    
+                                <% i = banco.disciplina %>
+                            <% }) %>
+                        </select>
                     </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>

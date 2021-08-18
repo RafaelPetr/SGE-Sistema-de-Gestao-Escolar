@@ -55,6 +55,21 @@ nav ul li:active {
 	background-color: #0827D4;
 }
 
+#seta {
+    width: 0; 
+    height: 0; 
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    
+    border-top: 7px solid #00DEB9;
+}
+
+nav ul li #seta {
+    float: right;
+    margin-top: 5px;
+    margin-left: 2px;
+}
+
 nav ul li a:link, 
 nav ul li a:visited {
     color: #00DEB9;
@@ -63,58 +78,73 @@ nav ul li a:visited {
 }
 
 main {
-    padding: 10% 0;
+    text-align: center;
+    max-width: 600px;
+	margin:0 auto;
+    margin-top:10%;
     background-color: #138bc7;
 }
 
-main h1 {
-    text-align: center;
-    margin-bottom: 5%;
+main #formTitulo {
+    padding: 20px 0;
+    color: #00DEB9;
+    background-color: #085DD4;
+}
+
+main #contaCriada {
+    font-size: 24px;
+    color: #00DEB9;
+    padding: 50px 0;
+}
+
+main select {
+    font-size: 24px;
     color: #00DEB9;
 }
 
-main #voltar {
-	margin-left:48%;
+main a {
+	padding: 12px 10px;
+	background-color: #085DD4;
+}
+
+main p {
+    margin-bottom: 20px;
+}
+
+main form {
+    padding: 50px 0;
+    color: #00DEB9;
+}
+
+main form div {
+    margin-bottom: 20px;
+}
+
+main form div label {
+    font-size: 24px;
+}
+
+main form div input {
+    width: 90%;
+}
+
+main form input {
+    color: #085DD4;
+    font-size: 24px;
+}
+
+main a:link, 
+main a:visited {
     color: #00DEB9;
     text-decoration: none;
     font-weight: bold;
-	padding: 12px 10px;
-	background-color: #0827D4;
-}
-
-img {
-    max-width: 100%;
-}
-
-.linha {
-    margin-bottom: 5%;
-}
-
-.linha ul li {
-	max-width: 28%;
-    margin-left: 4%;
-}
-
-.linha ul li div {
-	border: 3px solid black;
-    background-color: #09D3DE;
-}
-
-.linha ul li div img {
-	border-bottom: 3px solid black;
-}
-
-.linha ul li div p {
-    margin-bottom:4px;
-    margin-left: 10px;
-    word-wrap: break-word;
-    text-align: center;
 }
 
 footer {
     color: #00DEB9;
     background-color: #085DD4;
 
+    margin-top: 10%;
     padding: 12px 0;
 }
 

@@ -10,19 +10,15 @@
             <thead>
                 <tr>
                     <th scope="col">CPF</th>
-                    <th scope="col">Nome</th>
-                    <th scope="col">E-Mail</th>
-                    <th scope="col">Telefone</th>
+                    <th scope="col">Id Disciplina</th>
                 </tr>
             </thead>
         <% if (banco) { %>
             <tbody>
                 <% banco.forEach(function(banco){ %>
                     <tr>
-                        <td><%= banco.cpf %></td>
-                        <td><%= banco.nome %></td>
-                        <td><%= banco.email %></td>
-                        <td><%= banco.telefone %></td>
+                        <td><%= banco.cpf_professor %></td>
+                        <td><%= banco.id_disciplina %></td>
                     </tr>
                 <% }) %>
             </tbody>

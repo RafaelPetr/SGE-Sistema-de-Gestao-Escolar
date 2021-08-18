@@ -8,21 +8,21 @@
     <title>Escola</title>
 </head>
     <body>
-        <header>
-        <a id="titulo" href="/">SGE: Sistema de Gestão Escolar</a>
-        <nav>
-            <ul>
-                <li>
-                    <a href="/contato/">Contato</a>
-                </li>
-                <li>
-                    <a href="/conta/login/">Sair</a>
-                </li>
-            </ul>
-        </nav>
-        </header>
-        <main>
-            <div id="container">
+        <div id="container">
+            <header>
+                <a id="titulo" href="/">SGE: Sistema de Gestão Escolar</a>
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="/contato/">Contato</a>
+                        </li>
+                        <li>
+                            <a href="/conta/login/">Sair</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
                 <h1><%= banco.nome %></h1>
                 <section class="linha">
                     <ul>
@@ -56,10 +56,10 @@
                     </li>
                     </ul>
                 </section>
-            </div>
-        </main>
-        <footer>
-            <p>Página criada por Rafael Petry da Silva, 2021.</p>
-        </footer>
+            </main>
+            <footer>
+                <p>Página criada por Rafael Petry da Silva, 2021.</p>
+            </footer>
+        </div>
     </body>
 </html>
