@@ -24,32 +24,44 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Vincule Professor à Disciplina</h1>
+                    <h1>Cadastrar Aluno</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
-                        <label for="cpf">CPF do Professor</label><br>
-                        <select id="cpf" name="cpf">
-                            <% var i = 0 %>
+                        <label for="matricula">Matrícula</label><br>
+                        <select id="matricula" name="matricula">
+                            <% matriculas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <% if (i != banco.cpf) { %>
-                                    <option name="<%= banco.cpf %>" value="<%= banco.cpf %>"><%= banco.cpf %></option>
-                                <% } %>    
-                                <% i = banco.cpf %>
+                                <% if (!matriculas.includes(banco.matricula)) { %>
+                                    <% matriculas.push(banco.matricula) %>
+                                    <option name="<%= banco.matricula %>" value="<%= banco.matricula %>"><%= banco.matricula %></option>
+                                <% } %>
                             <% }) %>
                         </select>
                     </div>
                     <div>
-                        <label for="disciplina">ID da Disciplina</label><br>
+                        <label for="disciplina">Disciplina</label><br>
                         <select id="disciplina" name="disciplina">
                             <% disciplinas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <% if (!disciplinas.includes(banco.id)) { %>
-                                    <% disciplinas.push(banco.id) %>
-                                    <option name="<%= banco.id %>" value="<%= banco.id %>"><%= banco.id %></option>
+                                <% if (!disciplinas.includes(banco.disciplina)) { %>
+                                    <% disciplinas.push(banco.disciplina) %>
+                                    <option name="<%= banco.disciplina %>" value="<%= banco.disciplina %>"><%= banco.disciplina %></option>
                                 <% } %>
                             <% }) %>
                         </select>
+                    </div>
+                    <div>
+                        <label for="nota1">Trimestre 1</label><br>
+                        <input type="number" id="nota1" name="nota1"><br>
+                    </div>
+                    <div>
+                        <label for="nota2">Trimestre 2</label><br>
+                        <input type="number" id="nota2" name="nota2"><br>
+                    </div>
+                    <div>
+                        <label for="nota3">Trimestre 3</label><br>
+                        <input type="number" id="nota3" name="nota3"><br>
                     </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>

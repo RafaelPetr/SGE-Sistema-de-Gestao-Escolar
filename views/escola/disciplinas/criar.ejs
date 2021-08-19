@@ -35,6 +35,14 @@
                         <label for="carga">Carga Horária</label><br>
                         <input type="number" id="carga" name="carga"><br>
                     </div>
+                    <div>
+                        <label for="id_curso">ID do Curso</label><br>
+                        <select id="id_curso" name="id_curso">
+                            <% banco.forEach(function(banco){ %>
+                                <option name="<%= banco.id_curso %>" value="<%= banco.id_curso %>"><%= banco.id_curso %></option>
+                            <% }) %>
+                        </select>
+                    </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>
                 </form>

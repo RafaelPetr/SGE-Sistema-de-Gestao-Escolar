@@ -74,10 +74,10 @@ CREATE TABLE Disciplinas (
     id INT AUTO_INCREMENT NOT NULL,
     nome VARCHAR(30) NOT NULL,
     carga_horaria INT NOT NULL,
-    cnpj_escola VARCHAR(14) NOT NULL,
+    id_curso INT NOT NULL,
     
     PRIMARY KEY (id),
-    FOREIGN KEY (cnpj_escola) REFERENCES escolas(cnpj)
+    FOREIGN KEY (id_curso) REFERENCES cursos(id)
 );
 
 CREATE TABLE Professores_Disciplinas (

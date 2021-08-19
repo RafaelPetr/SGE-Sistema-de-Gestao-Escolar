@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" type="text/css" href="../../../../../client/usuario/css/usuario.css">
+      <title>Professor</title>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <a id="titulo" href="/">SGE: Sistema de Gestão Escolar</a>
+        <nav>
+          <ul>
+            <li>
+              <a href="/contato/">Contato</a>
+            </li>
+            <li>
+              <a href="/conta/login/">Sair</a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main>
+        <h1>Turma <%= id_turma %></h1>
+        <section class="linha">
+          <ul>
+            <li>
+              <div>
+                <a href="./notas/"><img src="../../../../../client/usuario/img/notas_icone.jpg" alt="Icone de Notas - Retirado de https://www.piqsels.com/en/public-domain-photo-zbgxh"></a>
+                <p>Acesse e atribua notas à turma.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <a href="./atividades/"><img src="../../../../../client/usuario/img/aulas_icone.jpg" alt="Icone de Aula - Retirado de https://www.piqsels.com/en/public-domain-photo-svhws"></a>
+                <p>Acesse e marque atividades para a turma.</p>
+              </div>
+            </li>
+          </ul>
+        </section>
+        <a id="voltar" href="../">Voltar</a>
+      </main>
+      <footer>
+        <p>Página criada por Rafael Petry da Silva, 2021.</p>
+      </footer>
+    </div>
+  </body>
+</html>

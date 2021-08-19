@@ -5,7 +5,6 @@ const db = require("../mysqlconnection");
 
 router.get('/:cnpj_escola', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    console.log(cnpj_escola);
     var sql = "SELECT * FROM escolas WHERE cnpj = ?;";
 
     db.query(sql, cnpj_escola,(err, result) => {
@@ -65,12 +64,18 @@ router.get('/:cnpj_escola/disciplinas/criadas', (req, res, next) => {
 });
 
 router.get('/:cnpj_escola/disciplinas/criar', (req, res, next) => {
-    res.sendFile(process.cwd() + '/views/escola/disciplinas/criar.html');
+    let cnpj_escola = req.params.cnpj_escola;
+    var sql = "SELECT id AS id_curso FROM cursos WHERE cursos.cnpj_escola = ?;";
+
+    db.query(sql, cnpj_escola,(err, result) => {
+        if (err) throw err;
+        res.render(process.cwd() + '/views/escola/disciplinas/criar.ejs', {banco: result});
+    })
 });
 
 router.post('/:cnpj_escola/disciplinas/criar', (req, res, next) => {
-    var sql = "INSERT INTO disciplinas (nome,carga_horaria,cnpj_escola) VALUES (?, ?, ?);";
-    db.query(sql, [req.body.nome, req.body.carga, req.params.cnpj_escola], (err,result) => {
+    var sql = "INSERT INTO disciplinas (nome,carga_horaria,id_curso) VALUES (?, ?, ?);";
+    db.query(sql, [req.body.nome, req.body.carga, req.body.id_curso], (err,result) => {
         if (err) throw err;
         res.redirect("/sucesso/");
     })
@@ -78,7 +83,7 @@ router.post('/:cnpj_escola/disciplinas/criar', (req, res, next) => {
 
 router.get('/:cnpj_escola/disciplinas/vinculo', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT turmas_disciplinas.id_turma, turmas_disciplinas.id_disciplina FROM ((turmas_disciplinas INNER JOIN turmas ON turmas_disciplinas.id_turma = turmas.id) INNER JOIN cursos ON turmas.id_curso = cursos.id AND cursos.cnpj_escola = ?);";
+    var sql = "SELECT turmas_disciplinas.id_turma, turmas_disciplinas.id_disciplina FROM (((turmas_disciplinas INNER JOIN turmas ON turmas_disciplinas.id_turma = turmas.id) INNER JOIN cursos ON turmas.id_curso = cursos.id) INNER JOIN escolas ON cursos.cnpj_escola = escolas.cnpj AND cursos.cnpj_escola = ?);";
 
     db.query(sql, cnpj_escola,(err, result) => {
         if (err) throw err;
@@ -88,7 +93,7 @@ router.get('/:cnpj_escola/disciplinas/vinculo', (req, res, next) => {
 
 router.get('/:cnpj_escola/disciplinas/criar_vinculo', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT turmas.id as turma, disciplinas.id as disciplina FROM (((turmas INNER JOIN cursos ON cursos.id = turmas.id_curso) INNER JOIN escolas ON cursos.cnpj_escola = escolas.cnpj AND cursos.cnpj_escola = 1) INNER JOIN disciplinas ON disciplinas.cnpj_escola = cursos.cnpj_escola AND escolas.cnpj = 1) ORDER BY disciplinas.id;"
+    var sql = "SELECT turmas.id as turma, disciplinas.id as disciplina FROM (((turmas INNER JOIN cursos ON cursos.id = turmas.id_curso) INNER JOIN escolas ON cursos.cnpj_escola = escolas.cnpj AND cursos.cnpj_escola = ?) INNER JOIN disciplinas ON disciplinas.id_curso = cursos.id AND escolas.cnpj = cursos.cnpj_escola) ORDER BY disciplinas.id;"
     
     db.query(sql, cnpj_escola,(err, result) => {
         if (err) throw err;
@@ -133,7 +138,7 @@ router.post('/:cnpj_escola/professores/contratar', (req, res, next) => {
 
 router.get('/:cnpj_escola/professores/vinculo', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores_disciplinas.cpf_professor, professores_disciplinas.id_disciplina FROM (((((professores_disciplinas INNER JOIN escolas_professores ON professores_disciplinas.cpf_professor = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN turmas_disciplinas ON turmas_disciplinas.id_disciplina = professores_disciplinas.id_disciplina) INNER JOIN turmas ON turmas.id = turmas_disciplinas.id_turma) INNER JOIN cursos ON turmas.id_curso = cursos.id) INNER JOIN escolas ON escolas.cnpj = cursos.cnpj_escola);";
+    var sql = "SELECT professores_disciplinas.cpf_professor, professores_disciplinas.id_disciplina FROM (((professores_disciplinas INNER JOIN escolas_professores ON professores_disciplinas.cpf_professor = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN disciplinas on professores_disciplinas.id_disciplina = disciplinas.id) INNER JOIN cursos ON cursos.id = disciplinas.id_curso AND cursos.cnpj_escola = escolas_professores.cnpj_escola)";
 
     db.query(sql, cnpj_escola,(err, result) => {
         if (err) throw err;
@@ -143,7 +148,7 @@ router.get('/:cnpj_escola/professores/vinculo', (req, res, next) => {
 
 router.get('/:cnpj_escola/professores/criar_vinculo', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores.cpf, disciplinas.id FROM ((professores INNER JOIN escolas_professores ON professores.cpf = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN disciplinas ON escolas_professores.cnpj_escola = disciplinas.cnpj_escola);";
+    var sql = "SELECT professores.cpf, disciplinas.id FROM (((professores INNER JOIN escolas_professores ON professores.cpf = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN cursos) INNER JOIN disciplinas ON cursos.id = disciplinas.id_curso AND cursos.cnpj_escola = escolas_professores.cnpj_escola);";
 
     db.query(sql, cnpj_escola,(err, result) => {
         if (err) throw err;
