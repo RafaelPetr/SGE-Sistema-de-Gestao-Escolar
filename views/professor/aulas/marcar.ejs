@@ -24,20 +24,37 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Cadastrar Aluno</h1>
+                    <h1>Marcar Aula</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
-                        <label for="cpf">CPF</label><br>
-                        <input type="text" id="cpf" name="cpf"><br>
-                    </div>
-                    <div>
-                        <label for="turma">Turma:</label>
+                        <label for="turma">Turma</label><br>
                         <select id="turma" name="turma">
+                            <% turmas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <option name="<%= banco.turma %>" value="<%= banco.turma %>"><%= banco.turma %></option>
+                                <% if (!turmas.includes(banco.turma)) { %>
+                                    <% turmas.push(banco.turma) %>
+                                    <option name="<%= banco.turma %>" value="<%= banco.turma %>"><%= banco.turma %></option>
+                                <% } %>
                             <% }) %>
                         </select>
+                    </div>
+                    <div>
+                        <label for="disciplina">Disciplina</label><br>
+                        <select id="disciplina" name="disciplina">
+                            <% console.log(banco.disciplina) %>
+                            <% disciplinas = [] %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (!disciplinas.includes(banco.disciplina)) { %>
+                                    <% disciplinas.push(banco.disciplina) %>
+                                    <option name="<%= banco.disciplina %>" value="<%= banco.disciplina %>"><%= banco.disciplina %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="data">Data</label><br>
+                        <input type="date" id="data" name="data"><br>
                     </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>

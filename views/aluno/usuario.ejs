@@ -4,7 +4,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" type="text/css" href="../../../../../client/usuario/css/usuario.css">
+      <link rel="stylesheet" type="text/css" href="../../../client/usuario/css/usuario.css">
       <title>Professor</title>
   </head>
   <body>
@@ -23,19 +23,25 @@
         </nav>
       </header>
       <main>
-        <h1>Turma <%= id_turma %></h1>
+        <h1><%= banco.nome %></h1>>
         <section class="linha">
           <ul>
             <li>
               <div>
-                <a href="./notas/"><img src="../../../../../client/usuario/img/notas_icone.jpg" alt="Icone de Notas - Retirado de https://www.piqsels.com/en/public-domain-photo-zbgxh"></a>
-                <p>Acesse e atribua notas à turma.</p>
+                <a href="./aulas/"><img src="../../../client/usuario/img/aulas_icone.jpg" alt="Icone de Aula - Retirado de https://www.piqsels.com/en/public-domain-photo-svhws"></a>
+                <p>Acesse a lista de aulas marcadas.</p>
               </div>
             </li>
             <li>
               <div>
-                <a href="./atividades/"><img src="../../../../../client/usuario/img/atividades_icone.jpg" alt="Icone de Atividade - Retirado de https://www.piqsels.com/en/public-domain-photo-zbtmy"></a>
-                <p>Acesse e marque atividades para a turma.</p>
+                <a href="./notas/"><img src="../../../client/usuario/img/notas_icone.jpg" alt="Icone de Notas - Retirado de https://www.piqsels.com/en/public-domain-photo-zbgxh"></a>
+                <p>Acesse suas notas em disciplinas.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <a href="./atividades/"><img src="../../../client/usuario/img/atividades_icone.jpg" alt="Icone de Atividade - Retirado de https://www.piqsels.com/en/public-domain-photo-zbtmy"></a>
+                <p>Acesse as atividades próximas.</p>
               </div>
             </li>
           </ul>

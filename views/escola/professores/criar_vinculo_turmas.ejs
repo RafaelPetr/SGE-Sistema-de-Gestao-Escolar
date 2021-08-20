@@ -24,18 +24,30 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Cadastrar Aluno</h1>
+                    <h1>Vincule Professor à Disciplina</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
-                        <label for="cpf">CPF</label><br>
-                        <input type="text" id="cpf" name="cpf"><br>
+                        <label for="cpf">CPF do Professor</label><br>
+                        <select id="cpf" name="cpf">
+                            <% var i = 0 %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (i != banco.cpf) { %>
+                                    <option name="<%= banco.cpf %>" value="<%= banco.cpf %>"><%= banco.cpf %></option>
+                                <% } %>    
+                                <% i = banco.cpf %>
+                            <% }) %>
+                        </select>
                     </div>
                     <div>
-                        <label for="turma">Turma:</label>
-                        <select id="turma" name="turma">
+                        <label for="disciplina">ID da Disciplina</label><br>
+                        <select id="disciplina" name="disciplina">
+                            <% disciplinas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <option name="<%= banco.turma %>" value="<%= banco.turma %>"><%= banco.turma %></option>
+                                <% if (!disciplinas.includes(banco.id)) { %>
+                                    <% disciplinas.push(banco.id) %>
+                                    <option name="<%= banco.id %>" value="<%= banco.id %>"><%= banco.id %></option>
+                                <% } %>
                             <% }) %>
                         </select>
                     </div>

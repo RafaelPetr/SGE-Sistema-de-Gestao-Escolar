@@ -54,7 +54,7 @@ CREATE TABLE Alunos (
 );
 
 CREATE TABLE Alunos_Escolas (
-	matricula VARCHAR(8) NOT NULL,
+	matricula INT AUTO_INCREMENT NOT NULL,
     cpf_aluno VARCHAR(11) NOT NULL,
 
     PRIMARY KEY(matricula,cpf_aluno),
@@ -62,11 +62,11 @@ CREATE TABLE Alunos_Escolas (
 );
 
 CREATE TABLE Alunos_Turmas (
-	matricula VARCHAR(8) NOT NULL,
+	matricula_aluno INT NOT NULL,
     id_turma INT NOT NULL,    
 
-    PRIMARY KEY(matricula,id_turma),
-    FOREIGN KEY(matricula) REFERENCES Alunos_Escolas(matricula),
+    PRIMARY KEY(matricula_aluno,id_turma),
+    FOREIGN KEY(matricula_aluno) REFERENCES Alunos_Escolas(matricula),
     FOREIGN KEY(id_turma) REFERENCES turmas(id)
 );
 
@@ -89,6 +89,15 @@ CREATE TABLE Professores_Disciplinas (
     FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
 );
 
+CREATE TABLE Professores_Turmas (
+	cpf_professor VARCHAR(11) NOT NULL,
+    id_turma INT NOT NULL,
+    
+    PRIMARY KEY(cpf_professor, id_turma),
+    FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
+    FOREIGN KEY(id_turma) REFERENCES turmas(id)
+);
+
 CREATE TABLE Turmas_Disciplinas (
     id_turma INT NOT NULL,
     id_disciplina INT NOT NULL,
@@ -101,7 +110,7 @@ CREATE TABLE Turmas_Disciplinas (
 CREATE TABLE Aulas (
     cpf_professor VARCHAR(11) NOT NULL,
     id_turma INT NOT NULL,
-    horario DATETIME NOT NULL,
+    data DATE NOT NULL,
     disciplina VARCHAR(30) NOT NULL,
     
     PRIMARY KEY(cpf_professor, id_turma),
@@ -112,15 +121,17 @@ CREATE TABLE Aulas (
 CREATE TABLE Atividades (
     id INT AUTO_INCREMENT NOT NULL,
     id_turma INT NOT NULL,
+    id_disciplina INT NOT NULL,
     titulo VARCHAR (100),
     descricao VARCHAR (400),
     
     PRIMARY KEY(id),
-    FOREIGN KEY (id_turma) REFERENCES turmas(id)
+    FOREIGN KEY (id_turma) REFERENCES turmas(id),
+    FOREIGN KEY (id_disciplina) REFERENCES disciplinas(id)
 );
 
 CREATE TABLE Notas (
-    matricula_aluno VARCHAR(8) NOT NULL,
+    matricula_aluno INT NOT NULL,
     id_disciplina INT NOT NULL,
     valor1 INT DEFAULT 0,
     valor2 INT DEFAULT 0,
