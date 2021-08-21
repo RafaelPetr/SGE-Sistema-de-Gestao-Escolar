@@ -8,7 +8,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/sucesso', (req, res, next) => {
-    res.sendFile(process.cwd() + '/views/escola/sucesso.html');
+    res.sendFile(process.cwd() + '/views/geral/sucesso.html');
+});
+
+router.get('/sobre', (req, res, next) => {
+    res.sendFile(process.cwd() + '/views/geral/sobre.html');
 });
 
 module.exports = router;

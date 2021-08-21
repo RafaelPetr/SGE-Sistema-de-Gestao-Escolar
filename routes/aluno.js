@@ -45,7 +45,7 @@ router.get('/:cpf_aluno/:matricula/notas', (req, res, next) => {
 
 router.get('/:cpf_aluno/:matricula/atividades', (req, res, next) => {
     let matricula = req.params.matricula;
-    var sql = "SELECT atividades.titulo, atividades.descricao FROM (atividades INNER JOIN alunos_turmas ON atividades.id_turma = alunos_turmas.id_turma AND alunos_turmas.matricula_aluno = ?);";
+    var sql = "SELECT atividades.titulo, atividades.descricao, atividades.id_disciplina AS disciplina FROM (atividades INNER JOIN alunos_turmas ON atividades.id_turma = alunos_turmas.id_turma AND alunos_turmas.matricula_aluno = ?);";
 
     db.query(sql, matricula,(err, result) => {
         if (err) throw err;

@@ -11,6 +11,7 @@
                 <tr>
                     <th scope="col">Título</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Disciplina</th>
                 </tr>
             </thead>
         <% if (banco) { %>
@@ -19,6 +20,7 @@
                     <tr>
                         <td><%= banco.titulo %></td>
                         <td><%= banco.descricao %></td>
+                        <td><%= banco.disciplina %></td>
                     </tr>
                 <% }) %>
             </tbody>

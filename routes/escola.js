@@ -136,57 +136,29 @@ router.post('/:cnpj_escola/professores/contratar', (req, res, next) => {
     })
 });
 
-router.get('/:cnpj_escola/professores/vinculo_disciplinas', (req, res, next) => {
+router.get('/:cnpj_escola/professores/vinculo', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores_disciplinas.cpf_professor, professores_disciplinas.id_disciplina FROM (((professores_disciplinas INNER JOIN escolas_professores ON professores_disciplinas.cpf_professor = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN disciplinas on professores_disciplinas.id_disciplina = disciplinas.id) INNER JOIN cursos ON cursos.id = disciplinas.id_curso AND cursos.cnpj_escola = escolas_professores.cnpj_escola)";
+    var sql = "SELECT professores_turmas_disciplinas.* FROM (professores_turmas_disciplinas INNER JOIN escolas_professores ON escolas_professores.cnpj_escola = ?);";
+
+    db.query(sql,cnpj_escola, (err, result) => {
+        if (err) throw err;
+        res.render(process.cwd() + '/views/escola/professores/vinculo.ejs', {banco: result});
+    })
+});
+
+router.get('/:cnpj_escola/professores/criar_vinculo', (req, res, next) => {
+    let cnpj_escola = req.params.cnpj_escola;
+    var sql = "SELECT professores.cpf, turmas.id AS turma, disciplinas.id as disciplina FROM ((((professores INNER JOIN escolas_professores ON escolas_professores.cnpj_escola = ? AND escolas_professores.cpf_professor = professores.cpf) INNER JOIN turmas) INNER JOIN cursos ON turmas.id_curso = cursos.id INNER JOIN escolas ON escolas.cnpj = cursos.cnpj_escola) INNER JOIN disciplinas ON disciplinas.id_curso = cursos.id);";
 
     db.query(sql, cnpj_escola,(err, result) => {
         if (err) throw err;
-        res.render(process.cwd() + '/views/escola/professores/vinculo_disciplinas.ejs', {banco: result});
+        res.render(process.cwd() + '/views/escola/professores/criar_vinculo.ejs', {banco: result});
     })
 });
 
-router.get('/:cnpj_escola/professores/criar_vinculo_disciplinas', (req, res, next) => {
-    let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores.cpf, disciplinas.id FROM (((professores INNER JOIN escolas_professores ON professores.cpf = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN cursos) INNER JOIN disciplinas ON cursos.id = disciplinas.id_curso AND cursos.cnpj_escola = escolas_professores.cnpj_escola);";
-
-    db.query(sql, cnpj_escola,(err, result) => {
-        if (err) throw err;
-        res.render(process.cwd() + '/views/escola/professores/criar_vinculo_disciplinas.ejs', {banco: result});
-    })
-});
-
-router.post('/:cnpj_escola/professores/criar_vinculo_disciplinas', (req, res, next) => {
-    var sql = "INSERT INTO professores_disciplinas (cpf_professor, id_disciplina) VALUES (?, ?);";
-    db.query(sql, [req.body.cpf, req.body.disciplina], (err,result) => {
-        if (err) throw err;
-        res.redirect("/sucesso/");
-    })
-});
-
-router.get('/:cnpj_escola/professores/vinculo_turmas', (req, res, next) => {
-    let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores_turmas.cpf_professor, professores_turmas.id_turma FROM (((professores_turmas INNER JOIN turmas ON professores_turmas.id_turma = turmas.id) INNER JOIN cursos ON turmas.id_curso = cursos.id) INNER JOIN escolas ON escolas.cnpj = cursos.cnpj_escola AND escolas.cnpj = ?);";
-
-    db.query(sql, cnpj_escola,(err, result) => {
-        if (err) throw err;
-        res.render(process.cwd() + '/views/escola/professores/vinculo_turmas.ejs', {banco: result});
-    })
-});
-
-router.get('/:cnpj_escola/professores/criar_vinculo_turmas', (req, res, next) => {
-    let cnpj_escola = req.params.cnpj_escola;
-    var sql = "SELECT professores.cpf, disciplinas.id FROM (((professores INNER JOIN escolas_professores ON professores.cpf = escolas_professores.cpf_professor AND escolas_professores.cnpj_escola = ?) INNER JOIN cursos) INNER JOIN disciplinas ON cursos.id = disciplinas.id_curso AND cursos.cnpj_escola = escolas_professores.cnpj_escola);";
-
-    db.query(sql, cnpj_escola,(err, result) => {
-        if (err) throw err;
-        res.render(process.cwd() + '/views/escola/professores/criar_vinculo_turmas.ejs', {banco: result});
-    })
-});
-
-router.post('/:cnpj_escola/professores/criar_vinculo_turmas', (req, res, next) => {
-    var sql = "INSERT INTO professores_disciplinas (cpf_professor, id_disciplina) VALUES (?, ?);";
-    db.query(sql, [req.body.cpf, req.body.disciplina], (err,result) => {
+router.post('/:cnpj_escola/professores/criar_vinculo', (req, res, next) => {
+    var sql = "INSERT INTO professores_turmas_disciplinas (cpf_professor, id_turma, id_disciplina) VALUES (?, ?, ?);";
+    db.query(sql, [req.body.cpf, req.body.turma, req.body.disciplina], (err,result) => {
         if (err) throw err;
         res.redirect("/sucesso/");
     })

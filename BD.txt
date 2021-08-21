@@ -80,22 +80,15 @@ CREATE TABLE Disciplinas (
     FOREIGN KEY (id_curso) REFERENCES cursos(id)
 );
 
-CREATE TABLE Professores_Disciplinas (
-	cpf_professor VARCHAR(11) NOT NULL,
-    id_disciplina INT NOT NULL,
-    
-    PRIMARY KEY(cpf_professor, id_disciplina),
-    FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
-    FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
-);
-
-CREATE TABLE Professores_Turmas (
+CREATE TABLE Professores_Turmas_Disciplinas (
 	cpf_professor VARCHAR(11) NOT NULL,
     id_turma INT NOT NULL,
+    id_disciplina INT NOT NULL,
     
-    PRIMARY KEY(cpf_professor, id_turma),
+    PRIMARY KEY(cpf_professor, id_turma, id_disciplina),
     FOREIGN KEY(cpf_professor) REFERENCES professores(cpf),
-    FOREIGN KEY(id_turma) REFERENCES turmas(id)
+    FOREIGN KEY(id_turma) REFERENCES turmas(id),
+    FOREIGN KEY(id_disciplina) REFERENCES disciplinas(id)
 );
 
 CREATE TABLE Turmas_Disciplinas (

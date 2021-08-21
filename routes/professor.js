@@ -26,7 +26,7 @@ router.get('/:cpf_professor/:cnpj_escola', (req, res, next) => {
 router.get('/:cpf_professor/:cnpj_escola/turmas', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
     let cpf_professor = req.params.cpf_professor;
-    var sql = "SELECT DISTINCT turmas_disciplinas.id_turma FROM ((((professores_disciplinas INNER JOIN turmas_disciplinas ON turmas_disciplinas.id_disciplina = professores_disciplinas.id_disciplina AND professores_disciplinas.cpf_professor = ?) INNER JOIN turmas ON turmas.id = turmas_disciplinas.id_turma) INNER JOIN cursos ON cursos.id = turmas.id_curso) INNER JOIN escolas ON cursos.cnpj_escola = escolas.cnpj AND escolas.cnpj = ?);";
+    var sql = "SELECT professores_turmas_disciplinas.id_turma FROM (((professores_turmas_disciplinas INNER JOIN turmas ON turmas.id = professores_turmas_disciplinas.id_turma AND professores_turmas_disciplinas.cpf_professor = ?) INNER JOIN cursos ON turmas.id_curso = cursos.id) INNER JOIN escolas ON escolas.cnpj = cursos.cnpj_escola AND escolas.cnpj = ?);";
 
     db.query(sql, [cpf_professor,cnpj_escola],(err, result) => {
         if (err) throw err;
@@ -56,7 +56,7 @@ router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/notas/acessar', (req, 
 router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/notas/atribuir', (req, res, next) => {
     let id_turma = req.params.id_turma;
     let cpf_professor = req.params.cpf_professor;
-    var sql = "SELECT alunos_turmas.matricula_aluno as matricula, professores_disciplinas.id_disciplina as disciplina FROM ((alunos_turmas INNER JOIN turmas_disciplinas ON turmas_disciplinas.id_turma = alunos_turmas.id_turma AND alunos_turmas.id_turma = ?) INNER JOIN professores_disciplinas ON professores_disciplinas.id_disciplina = turmas_disciplinas.id_disciplina AND professores_disciplinas.cpf_professor = ?);";
+    var sql = "SELECT alunos_turmas.matricula_aluno as matricula, professores_turmas_disciplinas.id_disciplina as disciplina FROM ((professores_turmas_disciplinas INNER JOIN turmas ON professores_turmas_disciplinas.cpf_professor = ? AND professores_turmas_disciplinas.id_turma = ? AND turmas.id = professores_turmas_disciplinas.id_turma) INNER JOIN alunos_turmas ON alunos_turmas.id_turma = turmas.id);";
 
     db.query(sql, [id_turma, cpf_professor],(err, result) => {
         if (err) throw err;
@@ -79,7 +79,7 @@ router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/atividades', (req, res
 
 router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/atividades/acessar', (req, res, next) => {
     let id_turma = req.params.id_turma;
-    var sql = "SELECT id, titulo, descricao FROM atividades WHERE id_turma = ?;";
+    var sql = "SELECT id, titulo, descricao, id_disciplina AS disciplina FROM atividades WHERE id_turma = ?;";
 
     db.query(sql, id_turma,(err, result) => {
         if (err) throw err;
@@ -88,14 +88,21 @@ router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/atividades/acessar', (
 });
 
 router.get('/:cpf_professor/:cnpj_escola/turmas/:id_turma/atividades/criar', (req, res, next) => {
-    res.sendFile(process.cwd() + '/views/professor/turmas/atividades/criar.html');
+    let cpf_professor = req.params.cpf_professor;
+    let id_turma = req.params.id_turma;
+    var sql = "SELECT id_disciplina as disciplina FROM professores_turmas_disciplinas WHERE professores_turmas_disciplinas.cpf_professor = ? AND professores_turmas_disciplinas.id_turma = ?;";
+
+    db.query(sql, [cpf_professor, id_turma],(err, result) => {
+        if (err) throw err;
+        res.render(process.cwd() + '/views/professor/turmas/atividades/criar.ejs', {banco: result});
+    })
 });
 
 router.post('/:cpf_professor/:cnpj_escola/turmas/:id_turma/atividades/criar', (req, res, next) => {
     let id_turma = req.params.id_turma;
-    var sql = "INSERT INTO atividades (id_turma, titulo, descricao) VALUES (?, ?, ?);";
+    var sql = "INSERT INTO atividades (id_turma, id_disciplina, titulo, descricao) VALUES (?, ?, ?, ?);";
     
-    db.query(sql, [id_turma, req.body.titulo, req.body.descricao], (err,result) => {
+    db.query(sql, [id_turma, req.body.disciplina, req.body.titulo, req.body.descricao], (err,result) => {
         if (err) throw err;
         res.redirect("/sucesso/");
     })
@@ -118,7 +125,7 @@ router.get('/:cpf_professor/:cnpj_escola/aulas/marcadas', (req, res, next) => {
 router.get('/:cpf_professor/:cnpj_escola/aulas/marcar', (req, res, next) => {
     let cnpj_escola = req.params.cnpj_escola;
     let cpf_professor = req.params.cpf_professor;
-    var sql = "SELECT DISTINCT turmas_disciplinas.id_turma as turma, turmas_disciplinas.id_disciplina as disciplina FROM ((((professores_disciplinas INNER JOIN turmas_disciplinas ON turmas_disciplinas.id_disciplina = professores_disciplinas.id_disciplina AND professores_disciplinas.cpf_professor = ?) INNER JOIN turmas ON turmas.id = turmas_disciplinas.id_turma) INNER JOIN cursos ON cursos.id = turmas.id_curso) INNER JOIN escolas ON cursos.cnpj_escola = escolas.cnpj AND escolas.cnpj = ?);"
+    var sql = "SELECT id_turma AS turma, id_disciplina AS disciplina FROM professores_turmas_disciplinas WHERE id_turma = ? AND cpf_professor = ?;"
     
     db.query(sql, [cpf_professor,cnpj_escola],(err, result) => {
         if (err) throw err;

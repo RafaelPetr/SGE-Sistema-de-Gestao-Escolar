@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" type="text/css" href="/client/conta/css/conta.css">
-        <title>Login</title>
+        <title>Cadastro</title>
     </head>
     <body>
         <div id="container">
@@ -14,7 +14,7 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="/contato/">Contato</a>
+                            <a href="/sobre/">Sobre</a>
                         </li>
                         <li>
                             <a href="/conta/login/">Login</a>
@@ -24,7 +24,7 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Vincule Professor à Disciplina</h1>
+                    <h1>Vincule Professor à Turma</h1>
                 </section>
                 <form method="POST" action="./">
                     <div>
@@ -40,13 +40,25 @@
                         </select>
                     </div>
                     <div>
+                        <label for="turma">ID da Turma</label><br>
+                        <select id="turma" name="turma">
+                            <% turmas = [] %>
+                            <% banco.forEach(function(banco){ %>
+                                <% if (!turmas.includes(banco.turma)) { %>
+                                    <% turmas.push(banco.turma) %>
+                                    <option name="<%= banco.turma %>" value="<%= banco.turma %>"><%= banco.turma %></option>
+                                <% } %>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div>
                         <label for="disciplina">ID da Disciplina</label><br>
                         <select id="disciplina" name="disciplina">
                             <% disciplinas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <% if (!disciplinas.includes(banco.id)) { %>
-                                    <% disciplinas.push(banco.id) %>
-                                    <option name="<%= banco.id %>" value="<%= banco.id %>"><%= banco.id %></option>
+                                <% if (!disciplinas.includes(banco.disciplina)) { %>
+                                    <% disciplinas.push(banco.disciplina) %>
+                                    <option name="<%= banco.disciplina %>" value="<%= banco.disciplina %>"><%= banco.disciplina %></option>
                                 <% } %>
                             <% }) %>
                         </select>

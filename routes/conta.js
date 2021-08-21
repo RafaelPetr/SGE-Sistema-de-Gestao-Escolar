@@ -69,16 +69,8 @@ router.post('/aluno', (req, res, next) => {
     var sql = "INSERT INTO alunos (cpf, nome, telefone, email, senha) VALUES (?, ?, ?, ?, ?);";
     db.query(sql, [req.body.cpf, req.body.nome, req.body.telefone, req.body.email, req.body.senha], (err,result) => {
         if (err) throw err;
-        res.redirect('../sucesso/' + req.body.cpf + "/" + req.body.senha + "/");
+        res.redirect('/sucesso/');
     })
-});
-
-router.get('/sucesso/:user/:senha/', (req, res, next) => {
-    conta = {
-        user: req.params.user,
-        senha: req.params.senha
-    }
-    res.render(process.cwd() + '/views/conta/sucesso.ejs', {conta});
 });
 
 module.exports = router;

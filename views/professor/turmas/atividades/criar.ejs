@@ -14,7 +14,7 @@
                 <nav>
                     <ul>
                         <li>
-                            <a href="/contato/">Contato</a>
+                            <a href="/sobre/">Sobre</a>
                         </li>
                         <li>
                             <a href="/conta/login/">Login</a>
@@ -24,32 +24,28 @@
             </header>
             <main>
                 <section id="formTitulo">
-                    <h1>Vincule Professor à Disciplina</h1>
+                    <h1>Cadastrar Atividade</h1>
                 </section>
                 <form method="POST" action="./">
-                    <div>
-                        <label for="cpf">CPF do Professor</label><br>
-                        <select id="cpf" name="cpf">
-                            <% var i = 0 %>
-                            <% banco.forEach(function(banco){ %>
-                                <% if (i != banco.cpf) { %>
-                                    <option name="<%= banco.cpf %>" value="<%= banco.cpf %>"><%= banco.cpf %></option>
-                                <% } %>    
-                                <% i = banco.cpf %>
-                            <% }) %>
-                        </select>
-                    </div>
                     <div>
                         <label for="disciplina">ID da Disciplina</label><br>
                         <select id="disciplina" name="disciplina">
                             <% disciplinas = [] %>
                             <% banco.forEach(function(banco){ %>
-                                <% if (!disciplinas.includes(banco.id)) { %>
-                                    <% disciplinas.push(banco.id) %>
-                                    <option name="<%= banco.id %>" value="<%= banco.id %>"><%= banco.id %></option>
+                                <% if (!disciplinas.includes(banco.disciplina)) { %>
+                                    <% disciplinas.push(banco.disciplina) %>
+                                    <option name="<%= banco.disciplina %>" value="<%= banco.disciplina %>"><%= banco.disciplina %></option>
                                 <% } %>
                             <% }) %>
                         </select>
+                    </div>
+                    <div>
+                        <label for="titulo">Título</label><br>
+                        <input type="text" id="titulo" name="titulo"><br>
+                    </div>
+                    <div>
+                        <label for="descricao">Descrição</label><br>
+                        <input type="text" id="descricao" name="descricao"><br>
                     </div>
                     <input type="submit" value="Cadastrar"><br><br><br>
                     <a href="../">Voltar</a>
